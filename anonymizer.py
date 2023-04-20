@@ -10,6 +10,13 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import scrolledtext
 
+# Check if openpyxl is installed
+try:
+    import openpyxl
+except:
+    print ("Error: openpyxl is not installed. Please install openpyxl and try again.")
+    exit ()
+
 # Configuration variables
 SETTINGS_FILE = os.path.join (os.path.expanduser("~"), "anonymizer_settings.json")
 DEFAULT_EXCLUDE_COLUMNS = "Start time,Completion time,Email,Name"
@@ -40,7 +47,7 @@ def load_settings () -> dict:
 # create a dataframe from an excel file, on None if there is an error
 def load_excel (filename : str) -> pd.DataFrame:
     try:
-        return pd.read_excel (filename)
+        return pd.read_excel (filename, engine = "openpyxl")
     except:
         return None
 
